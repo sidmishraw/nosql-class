@@ -67,6 +67,14 @@ P - Network Partitions (needs to be supported by all systems)
 > horizontal partioning, i.e - divide the data by row based on some logic, like the value of some attribute.
 
 
+### Pushed the logic of recognizing data from DBMS to the application
+> This is the benefit of the NoSQL dbs
+
+** Mongo stores the data by stemming (Porter algo?)
+
+### Versioning for concurrency control
+> Versioning is used to detect problems and not solve the problem.
+
 
 
 
