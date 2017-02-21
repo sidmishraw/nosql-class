@@ -1,0 +1,28 @@
+Spring 2017 CS185C:Introduction to NoSQL Databases
+
+Programming Assignment 1
+
+Instructor: Dr. Kim
+
+In this assignment, you will exercise CRUD operations of MongoDB by manipulating data from http://media.mongodb.org/zips.json . Limit the output to 10 documents. You need to figure out some of the functions required to finish this assignment which include mongoimport command, mapreduce and aggregation functions. I showed the examples of the mapreduce and the aggregation functions in class but you may need to study them futher to conduct the given tasks.
+Tasks
+
+Download the zips.json file to your VM.
+% wget http://media.mongodb.org/zips.json
+Import zips.json into MongoDB using mongoimport command. Import the data into a collection called cityinfo in a database called usdata.
+Get the screenshot (screen 1) that shows all collections of the database usdata.
+Find all documents of cityinfo collection. (screen 2)
+Find all documents with _id that contains 9503 in it. Do not include "loc" in the output. For example, expected documents in the output may include a document with "_id":"19503" and a document with "_id":"95037". (screen 3)
+Find all cities with populations between 23,000 and 150,000 where the state they are in borders the pacific ocean. (screen 4)
+Find all zip code in San Jose, New Work, or Washington that have a population between 6,000 and 11,000. (screen 5)
+Add an embedded document called "Details" into all documents with a Santa Clara County zip code. In Details, add the following fields with names and values: {county:"Santa Clara", medianIncome: 93500}. (screen 6)
+Find all documents that have an embedded document named Details without using the zip code. (screen 7)
+Use a MongoDB mapreduce function to find the population of every city and show the populations in the output. (screen 8)
+Use a MongoDB aggregate function to find the population of every city and show the populations in the output. (screen 9)
+Compare the execution times of the mapreduce and the aggregate functions to find the population of every city. (Write your comparison result.)
+Deliverable
+
+Include all the required screenshots and answers in yourname_hw1.pdf and zip it into hw1.zip. Submit hw1.zip through the submission link on the web cite.
+Due Date
+
+Saturday, February 25 11:59pm
