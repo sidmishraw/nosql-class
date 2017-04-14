@@ -1,0 +1,129 @@
+> db.comments.find({timestamp:{$gte:2,$lte:4},anonymous:false}).sort({rating:-1}).explain(true)
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "test.comments",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "anonymous" : {
+                                                "$eq" : false
+                                        }
+                                },
+                                {
+                                        "timestamp" : {
+                                                "$lte" : 4
+                                        }
+                                },
+                                {
+                                        "timestamp" : {
+                                                "$gte" : 2
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "anonymous" : 1,
+                                        "rating" : 1,
+                                        "timestamp" : 1
+                                },
+                                "indexName" : "anonymous_1_rating_1_timestamp_1",
+                                "isMultiKey" : false,
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 1,
+                                "direction" : "backward",
+                                "indexBounds" : {
+                                        "anonymous" : [
+                                                "[false, false]"
+                                        ],
+                                        "rating" : [
+                                                "[MaxKey, MinKey]"
+                                        ],
+                                        "timestamp" : [
+                                                "[4.0, 2.0]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 2,
+                "executionTimeMillis" : 0,
+                "totalKeysExamined" : 3,
+                "totalDocsExamined" : 2,
+                "executionStages" : {
+                        "stage" : "FETCH",
+                        "nReturned" : 2,
+                        "executionTimeMillisEstimate" : 0,
+                        "works" : 4,
+                        "advanced" : 2,
+                        "needTime" : 1,
+                        "needYield" : 0,
+                        "saveState" : 0,
+                        "restoreState" : 0,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "docsExamined" : 2,
+                        "alreadyHasObj" : 0,
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 2,
+                                "executionTimeMillisEstimate" : 0,
+                                "works" : 4,
+                                "advanced" : 2,
+                                "needTime" : 1,
+                                "needYield" : 0,
+                                "saveState" : 0,
+                                "restoreState" : 0,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "anonymous" : 1,
+                                        "rating" : 1,
+                                        "timestamp" : 1
+                                },
+                                "indexName" : "anonymous_1_rating_1_timestamp_1",
+                                "isMultiKey" : false,
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 1,
+                                "direction" : "backward",
+                                "indexBounds" : {
+                                        "anonymous" : [
+                                                "[false, false]"
+                                        ],
+                                        "rating" : [
+                                                "[MaxKey, MinKey]"
+                                        ],
+                                        "timestamp" : [
+                                                "[4.0, 2.0]"
+                                        ]
+                                },
+                                "keysExamined" : 3,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                },
+                "allPlansExecution" : [ ]
+        },
+        "serverInfo" : {
+                "host" : "vagrant-ubuntu-trusty-64",
+                "port" : 27017,
+                "version" : "3.2.11",
+                "gitVersion" : "009580ad490190ba33d1c6253ebd8d91808923e4"
+        },
+        "ok" : 1
+}
+>
+>

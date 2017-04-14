@@ -1,0 +1,23 @@
+<html>
+<h3>To create library database in SQLite</h3>
+<ol>
+<li> Have sqlite3.exe ready in your ssytem. sqlite3 is the command line shell to use sqlite.
+<li> Downlaod <a href = "./SQLite/library_sqlite.sql">SQL DDL program</a> and 
+ <a href = "./SQLite/book.csv"> book.csv, </a> <a href = "./SQLite/loan.csv">  loan.csv, </a>
+<a href = "./SQLite/user.csv"> user.csv </a> 
+The program will be used to   that will create and populate user, book and loan tables in the library database.
+<li> Run sqlite3 as shown below to create library database.
+<pre>
+%sqlite3 library.db
+sqlite> .databases
+</pre>
+<li> Execute the library_sqlite.sql script on sqlite prompt and check if tables are created.
+<pre>
+sqlite>.read library_sqlite.sql
+sqlite>.tables
+</pre>
+
+<li> Now you can manipulate these tables using various SQL commands. Also, you can create views and insteadof triggers.   
+<ol>
+</html>
+

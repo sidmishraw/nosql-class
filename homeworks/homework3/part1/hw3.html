@@ -1,0 +1,55 @@
+
+<!-- saved from url=(0061)https://www.cs.sjsu.edu/~kim/nosql/contents/homework/hw3.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body><center>
+<font size="4">
+<h4> Spring 2017 CS185C:Introduction to NoSQL Databases  </h4>
+<h2>Programming Assignment 3 </h2><h2>
+</h2></font><h4><font size="4">Instructor: Dr. Kim</font></h4>
+</center>
+<hr>
+<ul>
+<li>The maximium obtainable score of Part I: 20 points. The part II (80 points)  will be added when CQL is introduced. 
+</li><li>Configure a VM in a way that prompts from the VM show your initial - This will be strictly enforced. 
+</li></ul>
+<hr>
+<h3>Part I - 20 points</h3>
+<ol>
+<li>Install Cassandra in your VM. The following is the instruction for the Ubuntu VM created by Vagrantfile. 
+<pre>% sudo apt-get update -y
+% sudo apt-get upgrade -y
+% sudo reboot
+
+1. Install Java 8
+https://www.liquidweb.com/kb/how-to-install-oracle-java-8-on-ubuntu-14-04-lts/
+
+2. http://cassandra.apache.org/download/
+
+3. call cqlsh
+
+Note: If you are running into an error, check the swap space as shown below and allocate a swap space. 
+
+% grep swap /var/log/cassandra/system.log
+WARN  [main] 2017-03-30 05:11:30,694 SigarLibrary.java:174 - Cassandra server running in degraded mode. Is swap disabled? : true,  Address space adequate? : true,  nofile limit adequate? : true, nproc limit adequate? : false
+
+% sudo fallocate -l 4G /swapfile
+% sudo mkswap /swapfile
+% sudo swapon /swapfile
+% sudo swapon -s
+% sudo vi /etc/fstab
+/swapfile   none    swap    sw    0   0
+% sudo service cassandra start
+</pre>
+
+</li><li>Run cqlsh and get a screenshot as shown below:
+<pre>Last login: Sat Apr  1 17:21:39 2017 from 10.0.2.2
+vagrant@vagrant-ubuntu-trusty-64:~$ cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 3.10 | CQL spec 3.4.4 | Native protocol v4]
+Use HELP for help.
+cqlsh&gt;
+</pre>
+
+</li><li>Part I Due Date: Submit the screenshot by <b>Tuesday, April 11 11:59pm</b>  
+</li></ol>
+
+</body></html>

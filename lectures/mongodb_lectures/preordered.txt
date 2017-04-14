@@ -1,0 +1,362 @@
+> db.comments.find({ timestamp: { $gte: 2, $lte: 4 }, anonymous: false }).sort( { rating: -1 } ).explain(true)
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "test.comments",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "anonymous" : {
+                                                "$eq" : false
+                                        }
+                                },
+                                {
+                                        "timestamp" : {
+                                                "$lte" : 4
+                                        }
+                                },
+                                {
+                                        "timestamp" : {
+                                                "$gte" : 2
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "filter" : {
+                                "$and" : [
+                                        {
+                                                "timestamp" : {
+                                                        "$lte" : 4
+                                                }
+                                        },
+                                        {
+                                                "timestamp" : {
+                                                        "$gte" : 2
+                                                }
+                                        }
+                                ]
+                        },
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "anonymous" : 1,
+                                        "rating" : 1
+                                },
+                                "indexName" : "anonymous_1_rating_1",
+                                "isMultiKey" : false,
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 1,
+                                "direction" : "backward",
+                                "indexBounds" : {
+                                        "anonymous" : [
+                                                "[false, false]"
+                                        ],
+                                        "rating" : [
+                                                "[MaxKey, MinKey]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [
+                        {
+                                "stage" : "SORT",
+                                "sortPattern" : {
+                                        "rating" : -1
+                                },
+                                "inputStage" : {
+                                        "stage" : "KEEP_MUTATIONS",
+                                        "inputStage" : {
+                                                "stage" : "SORT_KEY_GENERATOR",
+                                                "inputStage" : {
+                                                        "stage" : "FETCH",
+                                                        "inputStage" : {
+                                                                "stage" : "IXSCAN",
+                                                                "keyPattern" : {
+                                                                        "anonymous" : 1,
+                                                                        "timestamp" : 1
+                                                                },
+                                                                "indexName" : "anonymous_1_timestamp_1",
+                                                                "isMultiKey" : false,
+                                                                "isUnique" : false,
+                                                                "isSparse" : false,
+                                                                "isPartial" : false,
+                                                                "indexVersion" : 1,
+                                                                "direction" : "forward",
+                                                                "indexBounds" : {
+                                                                        "anonymous" : [
+                                                                                "[false, false]"
+                                                                        ],
+                                                                        "timestamp" : [
+                                                                                "[2.0, 4.0]"
+                                                                        ]
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 2,
+                "executionTimeMillis" : 1,
+                "totalKeysExamined" : 3,
+                "totalDocsExamined" : 3,
+                "executionStages" : {
+                        "stage" : "FETCH",
+                        "filter" : {
+                                "$and" : [
+                                        {
+                                                "timestamp" : {
+                                                        "$lte" : 4
+                                                }
+                                        },
+                                        {
+                                                "timestamp" : {
+                                                        "$gte" : 2
+                                                }
+                                        }
+                                ]
+                        },
+                        "nReturned" : 2,
+                        "executionTimeMillisEstimate" : 0,
+                        "works" : 5,
+                        "advanced" : 2,
+                        "needTime" : 1,
+                        "needYield" : 0,
+                        "saveState" : 0,
+                        "restoreState" : 0,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "docsExamined" : 3,
+                        "alreadyHasObj" : 0,
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 3,
+                                "executionTimeMillisEstimate" : 0,
+                                "works" : 4,
+                                "advanced" : 3,
+                                "needTime" : 0,
+                                "needYield" : 0,
+                                "saveState" : 0,
+                                "restoreState" : 0,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "anonymous" : 1,
+                                        "rating" : 1
+                                },
+                                "indexName" : "anonymous_1_rating_1",
+                                "isMultiKey" : false,
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 1,
+                                "direction" : "backward",
+                                "indexBounds" : {
+                                        "anonymous" : [
+                                                "[false, false]"
+                                        ],
+                                        "rating" : [
+                                                "[MaxKey, MinKey]"
+                                        ]
+                                },
+                                "keysExamined" : 3,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                },
+                "allPlansExecution" : [
+                        {
+                                "nReturned" : 0,
+                                "executionTimeMillisEstimate" : 0,
+                                "totalKeysExamined" : 2,
+                                "totalDocsExamined" : 2,
+                                "executionStages" : {
+                                        "stage" : "SORT",
+                                        "nReturned" : 0,
+                                        "executionTimeMillisEstimate" : 0,
+                                        "works" : 4,
+                                        "advanced" : 0,
+                                        "needTime" : 4,
+                                        "needYield" : 0,
+                                        "saveState" : 0,
+                                        "restoreState" : 0,
+                                        "isEOF" : 0,
+                                        "invalidates" : 0,
+                                        "sortPattern" : {
+                                                "rating" : -1
+                                        },
+                                        "memUsage" : 154,
+                                        "memLimit" : 33554432,
+                                        "inputStage" : {
+                                                "stage" : "KEEP_MUTATIONS",
+                                                "nReturned" : 2,
+                                                "executionTimeMillisEstimate" : 0,
+                                                "works" : 4,
+                                                "advanced" : 2,
+                                                "needTime" : 1,
+                                                "needYield" : 0,
+                                                "saveState" : 0,
+                                                "restoreState" : 0,
+                                                "isEOF" : 1,
+                                                "invalidates" : 0,
+                                                "inputStage" : {
+                                                        "stage" : "SORT_KEY_GENERATOR",
+                                                        "nReturned" : 0,
+                                                        "executionTimeMillisEstimate" : 0,
+                                                        "works" : 4,
+                                                        "advanced" : 0,
+                                                        "needTime" : 1,
+                                                        "needYield" : 0,
+                                                        "saveState" : 0,
+                                                        "restoreState" : 0,
+                                                        "isEOF" : 1,
+                                                        "invalidates" : 0,
+                                                        "inputStage" : {
+                                                                "stage" : "FETCH",
+                                                                "nReturned" : 2,
+                                                                "executionTimeMillisEstimate" : 0,
+                                                                "works" : 3,
+                                                                "advanced" : 2,
+                                                                "needTime" : 0,
+                                                                "needYield" : 0,
+                                                                "saveState" : 0,
+                                                                "restoreState" : 0,
+                                                                "isEOF" : 1,
+                                                                "invalidates" : 0,
+                                                                "docsExamined" : 2,
+                                                                "alreadyHasObj" : 0,
+                                                                "inputStage" : {
+                                                                        "stage" : "IXSCAN",
+                                                                        "nReturned" : 2,
+                                                                        "executionTimeMillisEstimate" : 0,
+                                                                        "works" : 3,
+                                                                        "advanced" : 2,
+                                                                        "needTime" : 0,
+                                                                        "needYield" : 0,
+                                                                        "saveState" : 0,
+                                                                        "restoreState" : 0,
+                                                                        "isEOF" : 1,
+                                                                        "invalidates" : 0,
+                                                                        "keyPattern" : {
+                                                                                "anonymous" : 1,
+                                                                                "timestamp" : 1
+                                                                        },
+                                                                        "indexName" : "anonymous_1_timestamp_1",
+                                                                        "isMultiKey" : false,
+                                                                        "isUnique" : false,
+                                                                        "isSparse" : false,
+                                                                        "isPartial" : false,
+                                                                        "indexVersion" : 1,
+                                                                        "direction" : "forward",
+                                                                        "indexBounds" : {
+                                                                                "anonymous" : [
+                                                                                        "[false, false]"
+                                                                                ],
+                                                                                "timestamp" : [
+                                                                                        "[2.0, 4.0]"
+                                                                                ]
+                                                                        },
+                                                                        "keysExamined" : 2,
+                                                                        "dupsTested" : 0,
+                                                                        "dupsDropped" : 0,
+                                                                        "seenInvalidated" : 0
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        },
+                        {
+                                "nReturned" : 2,
+                                "executionTimeMillisEstimate" : 0,
+                                "totalKeysExamined" : 3,
+                                "totalDocsExamined" : 3,
+                                "executionStages" : {
+                                        "stage" : "FETCH",
+                                        "filter" : {
+                                                "$and" : [
+                                                        {
+                                                                "timestamp" : {
+                                                                        "$lte" : 4
+                                                                }
+                                                        },
+                                                        {
+                                                                "timestamp" : {
+                                                                        "$gte" : 2
+                                                                }
+                                                        }
+                                                ]
+                                        },
+                                        "nReturned" : 2,
+                                        "executionTimeMillisEstimate" : 0,
+                                        "works" : 4,
+                                        "advanced" : 2,
+                                        "needTime" : 1,
+                                        "needYield" : 0,
+                                        "saveState" : 0,
+                                        "restoreState" : 0,
+                                        "isEOF" : 1,
+                                        "invalidates" : 0,
+                                        "docsExamined" : 3,
+                                        "alreadyHasObj" : 0,
+                                        "inputStage" : {
+                                                "stage" : "IXSCAN",
+                                                "nReturned" : 3,
+                                                "executionTimeMillisEstimate" : 0,
+                                                "works" : 4,
+                                                "advanced" : 3,
+                                                "needTime" : 0,
+                                                "needYield" : 0,
+                                                "saveState" : 0,
+                                                "restoreState" : 0,
+                                                "isEOF" : 1,
+                                                "invalidates" : 0,
+                                                "keyPattern" : {
+                                                        "anonymous" : 1,
+                                                        "rating" : 1
+                                                },
+                                                "indexName" : "anonymous_1_rating_1",
+                                                "isMultiKey" : false,
+                                                "isUnique" : false,
+                                                "isSparse" : false,
+                                                "isPartial" : false,
+                                                "indexVersion" : 1,
+                                                "direction" : "backward",
+                                                "indexBounds" : {
+                                                        "anonymous" : [
+                                                                "[false, false]"
+                                                        ],
+                                                        "rating" : [
+                                                                "[MaxKey, MinKey]"
+                                                        ]
+                                                },
+                                                "keysExamined" : 3,
+                                                "dupsTested" : 0,
+                                                "dupsDropped" : 0,
+                                                "seenInvalidated" : 0
+                                        }
+                                }
+                        }
+                ]
+        },
+        "serverInfo" : {
+                "host" : "vagrant-ubuntu-trusty-64",
+                "port" : 27017,
+                "version" : "3.2.9",
+                "gitVersion" : "22ec9e93b40c85fc7cae7d56e7d6a02fd811088c"
+        },
+        "ok" : 1
+}
+>
+>
+>
+
